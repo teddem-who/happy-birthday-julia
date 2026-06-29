@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>For My Wife Julia</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;overflow:hidden;background:#050816;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+body{display:flex;align-items:center;justify-content:center}
+#stars{position:fixed;inset:0;background:
+radial-gradient(circle at 20% 30%,#fff 1px,transparent 1.5px),
+radial-gradient(circle at 70% 70%,#fff 1px,transparent 1.5px),
+radial-gradient(circle at 40% 80%,#fff 1px,transparent 1.5px);
+background-size:180px 180px;opacity:.25;animation:drift 50s linear infinite}
+@keyframes drift{from{transform:translateY(0)}to{transform:translateY(-180px)}}
+.card{position:relative;max-width:760px;width:90%;padding:36px;border-radius:24px;
+background:rgba(255,255,255,.08);backdrop-filter:blur(10px);
+box-shadow:0 0 30px rgba(0,0,0,.35);text-align:center}
+h1{margin-top:0}
+#hint{margin-top:28px;opacity:.75;font-size:.95rem}
+.fade{animation:fade .45s}
+@keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+#confetti{position:fixed;inset:0;pointer-events:none}
+.c{position:absolute;font-size:22px;animation:fall 4s linear forwards}
+@keyframes fall{from{transform:translateY(-30px)}to{transform:translateY(110vh) rotate(720deg)}}
+</style>
+</head>
+<body>
+<div id="stars"></div>
+<div class="card fade">
+<h1 id="title"></h1>
+<p id="text" style="white-space:pre-line;line-height:1.8"></p>
+<div id="hint">Tap anywhere to continue</div>
+</div>
+<div id="confetti"></div>
+<script>
+const pages=[
+["Hey, My Wife Julia.","There's something I've wanted to give you.\n\nIt isn't expensive.\nIt isn't wrapped.\n\nBut every part of it was made with you in mind."],
+["Before You","You once told me you didn't really believe in long distance.\n\nHonestly...\nNeither did I.\n\nYet somehow, life had different plans for us."],
+["Against The Odds","Different countries.\nDifferent lives.\nDifferent time zones.\n\nYet somehow...\nI still found you."],
+["Things I Love About You","I love your smile.\nI love your laugh.\nI love your kindness.\nI love how safe you make me feel.\nI love every version of you."],
+["Little Moments","Every late night call.\nEvery random conversation.\nEvery 'I miss you.'\n\nThose little moments became my favourite memories."],
+["Happy Birthday, My Wife Julia ❤️","Thank you for trusting me.\nThank you for letting me love you.\n\nOne day we won't celebrate through a screen.\nI'll be right beside you.\n\nUntil then...\nI'll keep choosing you.\nEvery single day.\n\nHappy Birthday, my beautiful wife, Julia.\n\nForever yours,\nScott"]
+];
+let i=0;
+const t=document.getElementById("title");
+const p=document.getElementById("text");
+const hint=document.getElementById("hint");
+function render(){
+document.querySelector(".card").classList.remove("fade");
+void document.querySelector(".card").offsetWidth;
+document.querySelector(".card").classList.add("fade");
+t.textContent=pages[i][0];
+p.textContent=pages[i][1];
+hint.textContent=i===pages.length-1?"Tap anywhere for a little surprise":"Tap anywhere to continue";
+}
+render();
+function next(){
+if(i<pages.length-1){i++;render();}
+else{
+const box=document.getElementById("confetti");
+for(let n=0;n<120;n++){
+const e=document.createElement("div");
+e.className="c";
+e.textContent=["❤️","✨","🎉"][Math.floor(Math.random()*3)];
+e.style.left=Math.random()*100+"vw";
+e.style.animationDelay=(Math.random()*1.5)+"s";
+box.appendChild(e);
+}
+hint.textContent="I love you ❤️";
+document.removeEventListener("pointerup",next);
+}
+}
+document.addEventListener("pointerup",next,{passive:true});
+</script>
+</body>
+</html>
